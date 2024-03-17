@@ -1,7 +1,7 @@
 #
-# @lc app=leetcode id=226 lang=python3
+# @lc app=leetcode id=404 lang=python3
 #
-# [226] Invert Binary Tree
+# [404] Sum of Left Leaves
 #
 
 # @lc code=start
@@ -12,18 +12,17 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
+        self.res = 0 
         def dfs(node):
             if not node:
-                return 
-
+                return 0
+            if node.left and not node.left.left and not node.left.right:
+                self.res+=node.left.val
             dfs(node.left)
-            node.left, node.right = node.right, node.left
             dfs(node.right)
-            return node
-        return dfs(root)
-                
-
+        dfs(root)
+        return self.res
 
         
 # @lc code=end

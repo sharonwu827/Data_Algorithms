@@ -13,24 +13,24 @@
 #         self.right = right
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        
+        self.curSum = 0 
+        def dfs(node):
+            if not node:
+                return False
+            self.curSum+=node.val
+            if not node.left and not node.right:
+                if self.curSum == targetSum:
+                    return True
+            dfs(node.left)
+            dfs(node.right)
+            self.curSum-=node.val
+            return False
+
         if not root:
             return False
-        queue = [root]
-        while queue:
-            cur_sum = 0
-            for _ in range(len(queue)):
-                cur = queue.pop(0)
-                cur_sum+=cur.val
-                if cur.left:
-                    queue.append(cur.left)
-                    cur_sum+=cur.left.val
-                if cur.right:
-                    queue.append(cur.right)
-                    cur_sum+=cur.right.val
-                if not cur.left and not cur.right and cur_sum+cur.val == targetSum:
-                    return True
-        return False
+        return dfs(root) 
+
+            
           
 # @lc code=end
 
