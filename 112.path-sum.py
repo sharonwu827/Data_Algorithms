@@ -13,24 +13,20 @@
 #         self.right = right
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        self.curSum = 0 
-        def dfs(node):
-            if not node:
+        def hasPathSum(root, curSum):
+            if not root:
                 return False
-            self.curSum+=node.val
-            if not node.left and not node.right:
-                if self.curSum == targetSum:
+            curSum+=root.val
+            if not root.left and not root.right:
+                if curSum == targetSum:
                     return True
-            dfs(node.left)
-            dfs(node.right)
-            self.curSum-=node.val
-            return False
+            left = hasPathSum(root.left, curSum)
+            right = hasPathSum(root.right, curSum)
+            # curSum-=root.val!!! we dont need it
+            # 为什么要返回left or right
+            # if left subtree or right subtree return true, then we find a path
+            return left or right
+        return hasPathSum(root, 0)
+        
 
-        if not root:
-            return False
-        return dfs(root) 
-
-            
-          
-# @lc code=end
 

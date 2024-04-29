@@ -7,6 +7,12 @@
 # @lc code=start
 class Solution:
     def generateMatrix(self, n: int) -> List[List[int]]:
+        rows = len(matrix)
+        cols = len(matrix[0])
+
+
+
+
        
 
         

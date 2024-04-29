@@ -15,11 +15,12 @@ class Solution:
         pre = None
         cur = head
         while cur:
-            tmp = cur.next
+            nxt = cur.next
             cur.next = pre
-            pre = cur
-            cur = tmp
-        return pre
-    
+            pre = cur #这里不是cur = cur.next
+            cur = nxt
+        return pre #为什么这里是pre
+
+
 # @lc code=end
 

@@ -14,8 +14,18 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        minVal = min(p.val, q.val)
+        maxVal = max(p.val, q.val)
+        if root.val == minVal or root.val == maxVal or minVal<root.val<maxVal:
+            return root
+        if root.val>maxVal:
+            return self.lowestCommonAncestor(root.left, p, q)
+        if root.val<minVal:
+            return self.lowestCommonAncestor(root.right, p, q)
         
 
+
         
+
 # @lc code=end
 

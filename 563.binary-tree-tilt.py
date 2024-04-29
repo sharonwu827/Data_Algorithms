@@ -13,17 +13,20 @@
 #         self.right = right
 class Solution:
     def findTilt(self, root: Optional[TreeNode]) -> int:
-        self.total_sum = 0 
-        def dfs(node):
-            if not node:
-                return 0
-            left_sum = dfs(node.left)
-            right_sum = dfs(node.right)
-            self.total_sum += abs(left_sum - right_sum)
-            return left_sum + right_sum + node.val
-        
+        self.res = 0
+        def dfs(root):
+            if not root:
+                return 0 
+            left = dfs(root.left)
+            right = dfs(root.right)
+            # calculate each root tilt while traverse
+            self.res+=abs(right-left)
+            # computing the sum of values in the subtree rooted at the current node
+            # This sum is needed because we want to calculate the tilt of the current node based on the sum of values in its left and right subtrees.
+            return left+right+root.val
         dfs(root)
-        return self.total_sum
-    
+        return self.res
+        
+        
 # @lc code=end
 

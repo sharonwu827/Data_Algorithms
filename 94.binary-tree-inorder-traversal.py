@@ -13,15 +13,51 @@
 #         self.right = right
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        stack = []
+        curNode = root
         res = []
-        def Inorder(node):
-            if not node:
-                return 
-            Inorder(node.left)
-            res.append(node.val)
-            Inorder(node.right)
-        Inorder(root)
+        while stack or curNode:
+            while curNode:
+                stack.append(curNode)
+                curNode = curNode.left
+            else:
+                curNode = stack.pop()
+                res.append(curNode.val)
+                curNode = curNode.right
         return res
+
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        stack = []
+        curNode = root
+        res = []
+        while stack or curNode:
+            while curNode:
+                stack.append(curNode)
+                res.append(curNode.val)
+                curNode = curNode.left
+            else:
+                curNode = stack.pop()
+                curNode = curNode.right
+        return res
+
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        stack = []
+        curNode = root
+        res = []
+        while stack or curNode:
+            while curNode:
+                stack.append(curNode)
+                res.append(curNode.val)
+                curNode = curNode.right
+            else:
+                curNode = stack.pop()
+                curNode = curNode.left
+        return res[::-1]
+
+
+
         
         
 # @lc code=end

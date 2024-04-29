@@ -14,6 +14,5 @@
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
         
-        
 # @lc code=end
 

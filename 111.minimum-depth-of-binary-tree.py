@@ -11,22 +11,28 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
+
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
-        self.min_depth = float('inf')
-        def dfs(node, depth):
-            if not node:
-                return 0
-            if not node.left and not node.right:
-                self.min_depth = min(self.min_depth, depth)
-            left = dfs(node.left, depth+1)
-            right = dfs(node.right, depth+1)
-        
         if not root:
             return 0
-        dfs(root, 1)
-        return self.min_depth
-
         
+        queue = deque()
+        queue.append((root, 1))
+        while queue:
+            for _ in range(len(queue)):
+                cur, curDepth = queue.popleft()
+                if not cur.left and not cur.right:
+                    return curDepth
+                if cur.left:
+                    queue.append((cur.left, curDepth + 1))
+                if cur.right:
+                    queue.append((cur.right, curDepth + 1))
+        return 0
+
+
+            
+            
 # @lc code=end
 

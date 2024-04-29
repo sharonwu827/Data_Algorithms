@@ -6,23 +6,17 @@
 
 # @lc code=start
 class Solution:
-    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
-        left = 0
-        cur = 0
-        min_len = float("inf")
-
-        for right in range(left, len(nums)):
-            cur+=nums[right]
-            while cur >= target:
-                # mean we find a target, we update the res
-                min_len = min(min_len, right-left+1)
-                cur -=nums[left]
-                left+=1
-        
-        return min_len if min_len != float("inf") else 0
-                
-       
-        
-        
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        l = total = 0
+        ans = len(nums) + 1
+        for r in range(len(nums)):
+            total += nums[r]
+            while total >= s:
+                ans = min(ans, r - l + 1)
+                total -= nums[l]
+                l += 1
+        return  0 if ans == len(nums) + 1 else ans
+        return res
+            
 # @lc code=end
 

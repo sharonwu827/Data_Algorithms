@@ -13,11 +13,21 @@
 #         self.right = right
 class Solution:
     def sumRootToLeaf(self, root: Optional[TreeNode]) -> int:
-        self.total_sum = 0 
-        def postorder(node, path):
+        
+        self.res = 0 
+        self.path = 0
+        def traverse(node):
             if not node:
-                return
-            left_sum = postorder(node.left,  val+node.val)
+                return 
+            self.path = (self.path << 1) | root.val
+            if not node.left and not node.right:
+                self.res += (self.path << 1) | root.val
+            traverse(node.left)
+            traverse(node.right)
+            self.curPath.pop()
+        traverse(root)
+        return self.res
+
 
             
 

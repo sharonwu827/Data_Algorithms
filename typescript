@@ -1,0 +1,9 @@
+
+
+const styles = tv({
+    variants: {
+        transitionTiming: {
+            wrapper: 'transtition-duration:150 ms transition-timeing-function: cubic -bezier(0.68, -0.6, 0.32, 1.6)'
+        }
+    }
+})
