@@ -20,10 +20,8 @@ class Solution:
         if root.val>val:
             root.left = self.insertIntoBST(root.left, val)
         return root
+    
         
-        
-
-
-        
+   
 # @lc code=end
 

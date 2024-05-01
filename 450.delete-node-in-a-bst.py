@@ -14,24 +14,23 @@
 class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         if not root:
-            return 
-        if root.val == key:
+            return
+        if root.val<key:
+            root.right = self.deleteNode(root.right, key)
+        if root.val>key:
+            root.left = self.deleteNode(root.left, key)
+        
+        if root.val==key:
             if not root.left:
                 return root.right
             if not root.right:
                 return root.left
+            # find 右子树最小值
             tmp = root.right
             while tmp.left:
                 tmp = tmp.left
             root.val = tmp.val
             root.right = self.deleteNode(root.right, tmp.val)
         
-        if root.val < key:
-            root.right = self.deleteNode(root.right, key)
-        elif root.val > key:
-            root.left  = self.deleteNode(root.left, key)
         return root
-
-        
-# @lc code=end
-
+            

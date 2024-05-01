@@ -14,13 +14,14 @@
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
-            return []
-        queue = [root]
+            return 
+        queue = deque()
+        queue.append(root)
         res = []
         while queue:
             tmp = []
             for _ in range(len(queue)):
-                cur = queue.pop(0)
+                cur = queue.popleft()
                 tmp.append(cur.val)
                 if cur.left:
                     queue.append(cur.left)
@@ -28,6 +29,7 @@ class Solution:
                     queue.append(cur.right)
             res.append(tmp)
         return res
+                
 
                   
 # @lc code=end
