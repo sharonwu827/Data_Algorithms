@@ -13,16 +13,16 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-       
-       def helper(node, low, high):
-           if not node:
-               return True
-           if node.val <= low or node.val >= high:
-               return False
-           left = helper(node.left, low, node.val)
-           right = helper(node.right, node.val, high)
-           return left and right
-       return helper(root, float("-inf"),float("inf"))
+        def isValid(root, lower, upper):
+            if not root:
+                return True
+            if root.val<=lower or root.val>=upper:
+                return False
+            left =  isValid(root.left, lower, root.val) 
+            right =  isValid(root.right, root.val, upper)
+            return left and right
+        return isValid(root, -float('inf'), float('inf'))
+
             
         
 # @lc code=end

@@ -7,15 +7,12 @@
 # @lc code=start
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        window = set()
-        for i, num in enumerate(nums):
-            if i > k:
-                window.remove(nums[i - k -1])
-            if num in window:
-                return True
-            window.add(num)
-        return False
-
+        left = 0 
+        for right in range(len(nums)):
+            if right-left+1 >k:
+                left+=1
+            if right-left+1==k and nums[right]
+            
 
 
         

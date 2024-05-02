@@ -7,42 +7,35 @@
 # @lc code=start
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        # find whether dict_s include all the characters in t
-        def check(dict_s, dict_t):
-            for item, val in dict_t.items():
-                if item not in dict_s or dict_s[item]<val:
+        # check every character in t (including duplicates) is included in the window of s
+        def includeT(dict_t, dict_s):
+            for char in dict_t:
+                if char not in dict_s:
+                    return False
+                if dict_t[char]>dict_s[char]:
                     return False
             return True
-                    
-        left = 0
-        right = 0
-        dict_t = {}
-        for i in t:
-            dict_t[i] = dict_t.get(i, 0) + 1
-        dict_s = {}
-        found = 0
-        min_len = float("inf")
-        res = ''
-
-        if len(t) > len(s):
-            return ""
         
-        for right in range(len(s)):
-            dict_s[s[right]] = dict_s.get(s[right], 0)+1
-            if s[right] in dict_t and dict_t[s[right]] == dict_s[s[right]]:
-                found+=1
+        dict_t = defaultdict()
+        dict_s = defaultdict()
+        start = 0 
+        minLen = float("inf")
+        startInd = 0 
+
+        for char in t:
+            dict_t[char] = dict_t.get(char, 0)+1
+    
+        for end, char in enumerate(s):
+            dict_s[char] = dict_s.get(char, 0)+1
             # 这里在已经满足条件的情况下继续移动右指针没有意义
-            while check(dict_s, dict_t):
-                if min_len > right-left+1:
-                    res = s[left:right+1]
-                    min_len = right-left+1
-                dict_s[s[left]]-=1
-                if s[left] in dict_t and dict_t[s[left]] > dict_s[s[left]]:
-                    found-=1
-                left+=1
-           
-        return res
-                
-                
+            while includeT(dict_t, dict_s):
+                if minLen>end-start+1:
+                    minLen = end-start+1
+                    startInd = start
+                dict_s[s[start]]-=1
+                if not dict_s[s[start]]:
+                    del dict_s[s[start]]
+                start+=1
+        return s[startInd: startInd + minLen] if minLen != float("inf") else ""
 
        
