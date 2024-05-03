@@ -7,60 +7,35 @@
 # @lc code=start
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        dir = [(0, 0), (0, 1), (-1, 0), (1, 0)]
+        dir = [(1, 0), (-1, 0), (0, -1), (0, 1)]
         rows = len(board)
         cols = len(board[0])
-        visited = set()
-        def backtrack(x, y, i):
-            if not (0<=x<rows and 0<=y<cols):
-                return
-            if i == len(word):
+        visited = set() 
+        def dfs(x, y, ind):
+            '''
+            check board[x][y] == word[ind]
+            '''
+            if ind == len(word):
                 return True
-           
-            if board[x][y] == word[i]:
-                for i, j in dir:
-                    new_x = x+i
-                    new_y = y+j
-                path.append(board[new_x][new_y])
-                backtrack(new_x, new_y, path)
-            visited.remove((x,y))
-            path.pop()
-        
+            if not (0<=x<rows and 0<=y<cols):
+                return False
+            # means we have checked the end of word
+            if (x,y) in visited:
+                return False
+            if board[x][y] != word[ind]:
+                return False
+            visited.add((x, y))
+            for i, j in dir:
+                new_x =x+i
+                new_y = y+j
+                #注意这个写法
+                if dfs(new_x, new_y, ind+1):
+                    return True
+            visited.remove((x, y))
+
         for x in range(rows):
             for y in range(cols):
-                if board[x][y] == word[0]:
-                    if backtrack(x, y, []):
-                        return True
+                if dfs(x, y, 0):
+                    return True
         return False
 
-
-
-        
-# @lc code=end
-
-class Node:
-    def __init__(self):
-        # is_word表示这个结点是否为一个单词的结尾
-        # next[]表示这个结点的下一个26个字母结点
-        self.is_word = False
-        self.next = [None]*26
-class Trie:
-    def __init__(self):
-        self.root = Node()
-    
-    def insert(self, word):
-        now = self.root
-        length = len(word)
-        for i in range(length):
-            # 依次查找每个字符
-            # 如果所有下一个结点中没有当前字符，则增加新结点到下一个next[pos]
-            pos = ord(word[i]) - ord('a')
-            if now.next[pos] is None:
-                now.next[pos] = Node()
-            now = now.next[pos]
-        now.is_word = True
-    def search(self, word):
-        now = self.root
-        n = len(word)
-        for i in range(n):
-            

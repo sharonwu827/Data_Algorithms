@@ -5,35 +5,33 @@
 #
 
 # @lc code=start
-
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.count = 0 
+        self.preCount = 0 
 class WordDictionary:
 
     def __init__(self):
-        self.children = {}
-        self.isEndOfWord = False
-        
+        self.root = TrieNode()
     def addWord(self, word: str) -> None:
         node = self.root
         for char in word:
             if char not in node.children:
-                node.children[char] = char
-        node.isEndOfWord = True
+                node.children[char] = TrieNode()
+            node.preCount+=1
+            node = node.children[char]
+        node.count+=1
         
+
     def search(self, word: str) -> bool:
         node = self.root
         for char in word:
-            if char == '.':
-                continue
-            if char not in node.children:
+            if char=='.':
+
+            if char not in node.children and char != '.':
                 return False
             node = node.children[char]
-        return node.isEndOfWord # # 返回是否有单词结束标志
+        return True
         
-
-
-# Your WordDictionary object will be instantiated and called as such:
-# obj = WordDictionary()
-# obj.addWord(word)
-# param_2 = obj.search(word)
-# @lc code=end
 

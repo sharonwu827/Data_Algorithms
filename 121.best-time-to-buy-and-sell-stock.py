@@ -7,19 +7,15 @@
 # @lc code=start
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        '''
-        1. dp[i]: max profit on ith day
-        2. dp[0] = -prices[0]
-           dp[1] = prices[1]-prices[0]
-           dp[2] =  prices[2] - min(price[:2])
-        3. dp[i] = max(dp[i-1],prices[i] -minprice)
-        '''
-        dp = [0] * len(prices)
-        dp[0] = 0 
-        min_price = prices[0] #注意这里不是 min_price = 0
-        for i in range(1,len(prices)):
-            min_price = min(min_price, prices[i])
-            dp[i] = prices[i] - min_price
+        # dp[i] the max profit at ith day
+        n = len(prices)
+        dp = [0]*n
+        minPrice = float('inf')
+        for i in range(n):
+            minPrice = min(minPrice, prices[i])
+            dp[i] = max(dp[i], prices[i] - minPrice)
         return max(dp)
+
+
 # @lc code=end
 

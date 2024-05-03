@@ -8,15 +8,18 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         n = len(nums)
+        # dp[i][0] didnt stole at house i
+        # dp[i][1]  stole at house i
+        dp = [[0]*2 for _ in range(n)]
+        dp[0][1] = nums[0]
+        maxProfit = 0 
         if n==1:
             return nums[0]
-        # dp[i]: max amount of money we can rob at house i th
-        dp = [0] * n
-        dp[0] = nums[0]
-        dp[1] = max(nums[0], nums[1])
-        for i in range(2, len(nums)):
-            dp[i] = max(dp[i-1], nums[i]+dp[i-2])
-        return dp[-1]
+        for i in range(1, n):
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1])
+            dp[i][1] = dp[i-1][0]+nums[i]
+            maxProfit = max(maxProfit,dp[i][0], dp[i][1]  )
+        return maxProfit
 
         
 # @lc code=end
