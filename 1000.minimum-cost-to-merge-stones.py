@@ -8,12 +8,9 @@
 class Solution:
     def mergeStones(self, stones: List[int], k: int) -> int:
         n = len(stones)
-        if (n-1) % (k-1) != 0:
-            return -1
-        s = list(accumulate(stones,initial = 0))
-        @cache
-        def dfs
-
+        cache = {}
+        def helper(left, right):
+            if 
 
 # @lc code=end
 

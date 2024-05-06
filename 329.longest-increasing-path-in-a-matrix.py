@@ -9,30 +9,29 @@ class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
         dir = [(1, 0), (0, 1), (-1, 0),(0, -1)]
         rows = len(matrix)
-        columns = len(matrix[0])
-        # visited = set()
-        dp = [[0] * columns for _ in range(rows)]
-        
-        def getLen(x, y):
-            if not (0<=x<rows and 0<=y<columns):
-                return 0
-            if dp[x][y]!=0:
-                return dp[x][y]
+        cols = len(matrix[0])
+        cache = [[1]*cols for _ in range(rows)] 
+        def dfs(x, y):
+            if not (0<=x<rows and 0<=y<cols):
+                return 
+            if cache[x][y] != 1:
+                return cache[x][y] 
             for i, j in dir:
                 new_x = x+i
                 new_y = y+j
-                if (0<=new_x<rows and 0<=new_y<columns) and matrix[new_x][new_y]>matrix[x][y]:
-                     dp[x][y] = max(dp[x][y], getLen(new_x, new_y) + 1)
-            # dp[x][y] +=1 # It adds 1 to the length because we are including the current cell in the path.
-            # returns the length of the longest increasing path starting from the current cell (x, y)
-            # This value is needed for the recursive calls to getLen to determine the length of the path from neighboring cells.
-            return dp[x][y]
+                if (0<=new_x<rows and 0<=new_y<cols) and matrix[x][y]<matrix[new_x][new_y]:
+                    #这么写是错的
+                    # cache[x][y] = max(dfs(new_x, new_y), cache[x][y])+1
+                    cache[x][y] = max(dfs(new_x, new_y)+1, cache[x][y])
+            return cache[x][y]
         
-        max_len = 0
-        for i in range(rows):
-            for j in range(columns):
-                cur_len = getLen(i, j)
-                max_len = max(max_len, cur_len)
-        return max_len
+        maxLen = 1
+        for x in range(rows):
+            for y in range(cols):
+                maxLen = max(maxLen, dfs(x, y))
+        return maxLen
+
+        
+                    
 
    
