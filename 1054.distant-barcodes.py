@@ -9,19 +9,23 @@ class Solution:
     def rearrangeBarcodes(self, barcodes: List[int]) -> List[int]:
         maxHeap = []
         cnt = Counter(barcodes)
-        for key, freq in cnt.items():
-            heapq.heappush(maxHeap, (-freq, key))
+        for char, freq in cnt.items():
+            heapq.heappush(maxHeap, (-freq, char))
         res = []
-        while len(maxHeap)>=2:
-            freq1, key1 = heapq.heappop(maxHeap)
-            freq2, key2 = heapq.heappop(maxHeap)
-            res.extend([key1, key2])
-            if -freq1>1:
-                heapq.heappush(maxHeap, (freq1+1, key1))
-            if -freq2>1:
-                heapq.heappush(maxHeap, (freq2+1, key2))
-        if len(maxHeap):
-            res.append(maxHeap[0][1])
+        while maxHeap:
+            freq, char = heapq.heappop(maxHeap)
+            if res and res[-1] == char:
+                # if not maxHeap:
+                #     break
+                nextFreq, nextChar = heapq.heappop(maxHeap)
+                res.append(nextChar)
+                if nextFreq+1<0:
+                    heapq.heappush(maxHeap, (nextFreq+1, nextChar))
+                heapq.heappush(maxHeap, (freq, char))
+            else:
+                 res.append(char)
+                 if freq+1<0:
+                    heapq.heappush(maxHeap, (freq+1, char))
         return res
 
                 

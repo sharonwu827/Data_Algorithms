@@ -8,27 +8,31 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         n = len(nums)
-        if sum(nums)%2!=0:
+        if sum(nums) % 2 != 0:
             return False
-        target = sum(nums)//2
-        dp = [[False]* (target+1)for _ in range(n+1)]
-        # dp[i][j] return wheter from nums[:i-1] we can sum the element to j
-        dp[0][0] = True
-        for i in range(1, n+1):
-            for j in range(target+1):
-                if nums[i-1]<=j:
-                    dp[i][j] = max(dp[i-1][j-nums[i-1]], dp[i-1][j])
-                else:
-                    dp[i][j] = dp[i-1][j]
-        return dp[n][target]
+        target = sum(nums) // 2
+        cache = {}  # Initialize the cache dictionary
+
+        def memorization(i, curSum):
+            if (i, curSum) in cache:
+                return cache[(i, curSum)]
+
+            if curSum == target:
+                return True
+
+            if i == n:
+                return False
+
+            include = memorization(i + 1, curSum + nums[i])
+            exclude = memorization(i + 1, curSum)
+            
+            if include:
+                cache[(i, curSum)] = True
+            cache[(i, curSum)] = exclude
+
+            return cache[(i, curSum)]
+
+        return memorization(0, 0)
+
     
         
-        
-        
-                
-
-
-
-
-    
-

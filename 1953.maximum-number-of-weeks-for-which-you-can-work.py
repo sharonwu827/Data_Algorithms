@@ -8,23 +8,51 @@
 class Solution:
     def numberOfWeeks(self, milestones: List[int]) -> int:
         maxHeap = []
-        total_milestones = sum(milestones)
         for i in range(len(milestones)):
-            heapq.heappush(maxHeap, (-milestones[i], -i)) # store (-milestone, project)
-        res = 0
-        
-        while len(maxHeap)>=2:
-            milestone1, project1 = heapq.heappop(maxHeap)
-            milestone2, project2 = heapq.heappop(maxHeap)
-            res+=2
-            if -milestone1>1:
-                heapq.heappush(maxHeap, (milestone1+1, project1))
-            if -milestone2>1:
-                heapq.heappush(maxHeap, (milestone2+1, project2))
-        
-        return res+1 if maxHeap else res
-            
-            
-        
+            heapq.heappush(maxHeap, (-milestones[i], i)) # store (-#milestone, project)
+        curTime = 0
+        prevProject = None
+        # res = []
+        queue = deque()
+        while maxHeap:
+            freq, char = heapq.heappop(maxHeap)
+            curTime +=1
+            queue.append((freq+1, char))
+            if len(queue)>=2:
+                nextFreq, nextChar = queue.popleft()
+                if nextFreq < 0:
+                    heapq.heappush(maxHeap, (nextFreq, nextChar))
+
+        return curTime
+                
 # @lc code=end
+
+class Solution:
+    def rearrangeString(self, s: str, k: int) -> str:
+        if k==0 or k==1:
+            return s
+        dict_ = Counter(s)
+        maxHeap = [] 
+        queue = deque() 
+        for char, freq in dict_.items():
+            heapq.heappush(maxHeap, (-freq, char))
+        res = []
+         # Process tasks until the heap is empty
+        while maxHeap:
+            freq, char = heapq.heappop(maxHeap)
+            res.append(char)
+            queue.append((freq+1, char))
+            if len(queue)>=k:
+                nextFreq, nextChar = queue.popleft()
+                if next_freq < 0:
+                    heapq.heappush(maxHeap, (nextFreq, nextChar))
+
+        if len(res)<len(s):
+            return ""
+        else:
+            return ''.join(res) 
+                
+                
+
+            
 

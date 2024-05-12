@@ -21,7 +21,7 @@ class Solution:
                 if s[i] == s[j]:
                     dp[i][j] = dp[i+1][j-1]+2
                 else:
-                    dp[i][j] = max(dp[i+1,j], dp[i][j-1])
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
         return dp[0][n-1]
 
         

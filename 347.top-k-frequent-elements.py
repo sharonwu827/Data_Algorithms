@@ -7,22 +7,20 @@
 # @lc code=start
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        if k == len(nums):
-            return nums
+        dict_ = Counter(nums) #0(n)
+        minHeap = []
+
+        for key, val in dict_.items():
+            heapq.heappush(minHeap, (val, key)) #O(logN)
+            while len(minHeap)>k:
+                heapq.heappop(minHeap) #O(logN)
+        res = []
+        for _ in range(len(minHeap)):
+            res.append(heapq.heappop(minHeap)[1])
+        return res
         
-        hashmap = {}
-        heap = []
-        for num in nums:
-            hashmap[num] = hashmap.get(num, 0)+1
-
-        def partition(nums, low, high):
-            pivot = nums[low]
-            i, j = low, high
-            while i<j:
-                while i<j and nums[j]>=pivot:
-                    j-=1
-                while i<j and nums[i]
-
+        
+            
         
 
 

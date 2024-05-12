@@ -7,15 +7,22 @@
 # @lc code=start
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        l1 = 0 
-        l2 = 0 
-        while l1<len(s) and l2<len(t):
-            if s[l1]!=t[l2]:
-                l2+=1
+        if len(s) > len(t) :
+            return False
+        p1 = 0 
+        p2 = 0 
+        while p1<len(s) and p2<len(t):
+            # we find a matching letter
+            if t[p2] == s[p1]:
+                p1+=1
+                p2+=1
             else:
-                l1+=1
-                l2+=1
-        return True if l1==len(s) else False
+                p2+=1
+        return p1==len(s)
+
+
+
+       
 
         
         
