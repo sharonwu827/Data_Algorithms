@@ -47,7 +47,7 @@ class LRUCache:
             self.size += 1
             # remove the LRU
             if self.size > self.capacity:
-                node_to_remove = self.remove_tail()
+                node_to_remove = self.remove_node(self.tail.prev)
                 del self.cache[node_to_remove.key]
                 self.size -= 1
 
@@ -62,10 +62,6 @@ class LRUCache:
         next = node.next
         prev.next = next
         next.prev = prev
-
-    def remove_tail(self):
-        node = self.tail.prev
-        self.remove_node(node)
         return node
 
 

@@ -8,10 +8,10 @@
 class Solution:
     def minStickers(self, stickers: List[str], target: str) -> int:
         res = float("inf")
-        def backtrack(startInd, path):
+        n = len(target)
+        def memorization(startInd, path):
+            
             for i in range(startInd, len(stickers)):
-                if stic
-                backtrack(path)
-        
+
 # @lc code=end
 

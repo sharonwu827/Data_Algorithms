@@ -7,13 +7,18 @@
 # @lc code=start
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        dictS = Counter(s)
-        dictT = Counter(t)
-        if len(dictS)!=len(dictT):
-            return False
-        for val in dictS.values():
-            if val not in dictT.values():
+        mapST = defaultdict()
+        mapTS = defaultdict()
+
+        for i in range(len(s)):
+            c1 = s[i]
+            c2 = t[i]
+            if c1 in mapST and mapST[c1]!=c2:
                 return False
+            if c2 in mapTS and mapTS[c2]!=c1:
+                return False
+            mapST[c1]=c2
+            mapTS[c2]=c1
         return True
         
 # @lc code=end
