@@ -12,35 +12,38 @@
 #         self.next = next
 class Solution:
     def pairSum(self, head: Optional[ListNode]) -> int:
-        def partition(head):
+        def getMid(head):
             p1 = head
             p2 = head
             while p2.next and p2.next.next:
                 p1 = p1.next
                 p2 = p2.next.next
-            right = p1.next
-            p1.next = None
-            left = head
-            return left, right # return the right sub list
-        def reverseLinkList(head):
-            prev = None
+            return p1
+        mid = getMid(head)
+        secondHalfHead = mid.next
+        mid.next = None
+        firstHalf = head
+
+        def reverseLinkedList(prev, head):
             cur = head
             while cur:
-                nxt = cur.next
+                tmp = cur.next
                 cur.next = prev
                 prev = cur
-                cur = nxt
-            return prev
-        left, right = partition(head)
-        reversedRight = reverseLinkList(right)
-        p1 = left
-        p2 = reversedRight
-        maxSum = 0 
+                cur = tmp
+            return prev # not return cur.next cuz cur is none
+        reversedSecondHalf = reverseLinkedList(None, secondHalfHead)
+        maxTwinSum = 0
+        p1 = firstHalf
+        p2 = reversedSecondHalf
         while p1 and p2:
-            maxSum = max(maxSum, p1.val+p2.val)
+            maxTwinSum = max(maxTwinSum, p1.val+p2.val)
             p1 = p1.next
             p2 = p2.next
-        return maxSum
+        return maxTwinSum
+    
+
+    
             
      
 # @lc code=end

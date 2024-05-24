@@ -11,7 +11,7 @@ class Solution:
         rows = len(grid)
         columns = len(grid[0])
         queue = deque()
-        
+
         # 找到所有的水单元格并将其加入队列
         for i in range(rows):
             for j in range(columns):
@@ -25,7 +25,6 @@ class Solution:
         max_shortest_distance = -1
         while queue:
             x, y, step = queue.popleft()
-            
             for i, j in dir:
                 new_x = x+i
                 new_y = y+j
