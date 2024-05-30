@@ -9,9 +9,15 @@ class Solution:
     def minStickers(self, stickers: List[str], target: str) -> int:
         res = float("inf")
         n = len(target)
+        res = float('inf')
         def memorization(startInd, path):
             
             for i in range(startInd, len(stickers)):
+                
+
+
+
+                
 
 # @lc code=end
 
