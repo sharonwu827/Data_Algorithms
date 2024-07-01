@@ -17,9 +17,8 @@ class Solution:
             frequency = Counter(arr)[max_num]
             return frequency >= k
 
-        numSubarr = 0 
+        numArray = 0 
         left = 0 
-        right = 0 
         for right in range(len(nums)):
             while not isValid(nums[left:right+1]):
                 left += 1

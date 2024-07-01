@@ -9,50 +9,26 @@ class Solution:
     def numberOfWeeks(self, milestones: List[int]) -> int:
         maxHeap = []
         for i in range(len(milestones)):
-            heapq.heappush(maxHeap, (-milestones[i], i)) # store (-#milestone, project)
-        curTime = 0
-        prevProject = None
-        # res = []
-        queue = deque()
-        while maxHeap:
-            freq, char = heapq.heappop(maxHeap)
-            curTime +=1
-            queue.append((freq+1, char))
-            if len(queue)>=2:
-                nextFreq, nextChar = queue.popleft()
-                if nextFreq < 0:
-                    heapq.heappush(maxHeap, (nextFreq, nextChar))
-
-        return curTime
-                
-# @lc code=end
-
+            heapq.heappush(maxHeap, (-milestones[i], i))
+        res = 0
+        while len(maxHeap)>=2:
+            freq1, key1 = heapq.heappop(maxHeap)
+            freq2, key2 = heapq.heappop(maxHeap)
+            res+=2
+            if freq1+1<0: 
+                heapq.heappush(maxHeap, (freq1+1, key1))
+            if freq2+1<0: 
+                heapq.heappush(maxHeap, (freq2+1, key2))
+        return res+1 if maxHeap else res
+    
 class Solution:
-    def rearrangeString(self, s: str, k: int) -> str:
-        if k==0 or k==1:
-            return s
-        dict_ = Counter(s)
-        maxHeap = [] 
-        queue = deque() 
-        for char, freq in dict_.items():
-            heapq.heappush(maxHeap, (-freq, char))
-        res = []
-         # Process tasks until the heap is empty
-        while maxHeap:
-            freq, char = heapq.heappop(maxHeap)
-            res.append(char)
-            queue.append((freq+1, char))
-            if len(queue)>=k:
-                nextFreq, nextChar = queue.popleft()
-                if next_freq < 0:
-                    heapq.heappush(maxHeap, (nextFreq, nextChar))
+    def numberOfWeeks(self, milestones: List[int]) -> int:
+        total = sum(milestones)     # 获取任务总数
+        most = max(milestones)        # 最大任务数
+        rest = total - most   # 其他任务总数
+        # 其他任务数 + 1 不超过最多任务，那么只能用其他任务数去插空最大任务数
+        # 否则所有任务一定可以互相插空最终完成所有任务
+        return 2 * rest + 1 if most >= rest + 1 else total
 
-        if len(res)<len(s):
-            return ""
-        else:
-            return ''.join(res) 
-                
-                
 
-            
-
+    

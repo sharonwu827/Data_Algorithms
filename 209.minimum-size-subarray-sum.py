@@ -7,16 +7,17 @@
 # @lc code=start
 class Solution:
     def minSubArrayLen(self, s: int, nums: List[int]) -> int:
-        l = total = 0
-        ans = len(nums) + 1
-        for r in range(len(nums)):
-            total += nums[r]
-            while total >= s:
-                ans = min(ans, r - l + 1)
-                total -= nums[l]
-                l += 1
-        return  0 if ans == len(nums) + 1 else ans
-        return res
+        minLen = float('inf')
+        left = 0
+        curSum = 0
+        for right in range(len(nums)):
+            curSum+=nums[right]
+            while curSum>=s:
+                minLen = min(minLen, right-left+1)
+                curSum-=nums[left]
+                left+=1
+        return minLen if minLen != float('inf') else 0
+                
             
 # @lc code=end
 

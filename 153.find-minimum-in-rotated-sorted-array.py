@@ -11,15 +11,12 @@ class Solution:
         right = len(nums)-1
         while left<right:
             mid = left+(right-left)//2
-            # from left to right, increasing
             if nums[mid]<nums[right]:
                 right = mid
             else:
-                left = mid+1
+                left = mid+1  
         return nums[left]
 
-
-        
-        
+    
 # @lc code=end
 

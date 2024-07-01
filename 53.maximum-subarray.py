@@ -7,12 +7,15 @@
 # @lc code=start
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        n = len(nums)
-        start = 0 
-        end = 0 
-        maxSum = 0 
-        for end in range(n):
-            nums[start]+=nums[end]
+        largestSum  = float('inf')
+        left = 0 
+        curSum = 0
+        for end in range(len(nums)):
+            curSum += nums[end]
+            if curSum > largestSum:
+                largestSum = curSum
+            
+            
 
             
 

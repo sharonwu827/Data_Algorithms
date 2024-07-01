@@ -8,23 +8,31 @@
 class Solution:
     def sumSubarrayMins(self, arr: List[int]) -> int:
         n = len(arr)
-        minLeft = [-1]*n
-        minRight = [n]*n
+        minLeft = [-1] * n
+        minRight = [n] * n
 
         stack = []
-        res = 0
+        for i in range(n-1, -1, -1):
+            while stack and arr[stack[-1]]>arr[i]:
+                minLeft[stack[-1]] = i
+                stack.pop()
+            stack.append(i)
+        print(minLeft)
+        stack.clear()
+         # for deal with duplicate value
+         # find the right element which smaller than or equal to nums[i]
         for i in range(n):
             while stack and arr[stack[-1]]>=arr[i]:
-                index = stack.pop()
-                minRight[index] = i
-            # 此时所有>=arr[i]的index都出了stack
-            # 剩下的就是arr[i]左侧最近的小元素
-            if stack:
-                minLeft[i]=stack[-1]
-            res+= (i-minLeft[i])*(minRight[i]-i) * arr[i]
+                minRight[stack[-1]] = i
+                stack.pop()
             stack.append(i)
+        print(minRight)
+        
+        res = 0
+        for i in range(n):
+            res+= arr[i] * (i-minLeft[i]) * (minRight[i]-i)
+        # Since the answer may be large, return the answer modulo 109 + 7.
         return res % (10 ** 9 + 7)
 
-             
-# @lc code=end
 
+            

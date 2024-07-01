@@ -7,26 +7,32 @@
 # @lc code=start
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        if k==0 or k==1:
-            return s
-        dict_ = Counter(s)
-        maxHeap = [] 
-        queue = deque() 
-        for char, freq in dict_.items():
-            heapq.heappush(maxHeap, (-freq, char))
-        res = []
-         # Process tasks until the heap is empty
-        while maxHeap:
-            freq, char = heapq.heappop(maxHeap)
-            res.append(char)
-            queue.append((freq+1, char))
-            if len(queue)>=n:
-                nextFreq, nextChar = queue.popleft()
-                if next_freq < 0:
-                    heapq.heappush(maxHeap, (nextFreq, nextChar))
+        tasksCounter = Counter(tasks)
+        maxHeap = []
+        for key, freq in tasksCounter.items():
+            heapq.heappush(maxHeap, (-freq, key))
+        res = 0
+        curTime = 0 
+        temp = deque()
+        while maxHeap or temp:
+            curTime+=1
+            if maxHeap:
+                freq, key = heapq.heappop(maxHeap)
+                if freq+1<0: 
+                    temp.append((freq+1, key, curTime+n))
+            if temp and temp[0][-1]<=curTime:
+                freq, key, _ = temp.popleft()
+                heapq.heappush(maxHeap, (freq, key))
+        return curTime
 
-        if len(res)<len(s):
-            return ""
-        else:
-            return ''.join(res) 
+            
+
+
+            
+            
+            
+            
+            
+
+        
         

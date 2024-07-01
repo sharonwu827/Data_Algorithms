@@ -9,20 +9,17 @@
 
 class Solution:
     def numOfSubarrays(self, arr: List[int], k: int, threshold: int) -> int:
-        res = 0 
-        n = len(arr)
         start = 0 
-        end = 0 
         target = k*threshold
         curSum = 0 
-        for end in range(n):
+        res = 0 
+        for end in range(len(arr)):
             curSum+=arr[end]
-            # 这两个if 不能更换位置
-            if end-start+1 > k:
-                curSum-=arr[start]
-                start+=1
             if end-start+1==k and curSum>=target:
                 res+=1
+            if end-start+1 >= k:
+                curSum-=arr[start]
+                start+=1
         return res
         
 # @lc code=end

@@ -7,7 +7,18 @@
 # @lc code=start
 class Solution:
     def customSortString(self, order: str, s: str) -> str:
-        reference = [0]*26
-        
+        frequency = Counter(s)
+        res = []
+        for char in order:
+            if char in frequency:
+                res.extend(char * frequency[char])
+                del frequency[char]
+        for char, freq in frequency.items():
+            res.extend(char * freq)
+        return ''.join(res)
+
+
+
+
 # @lc code=end
 

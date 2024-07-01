@@ -7,18 +7,23 @@
 # @lc code=start
 class Solution:
     def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+        if k<=1:
+           return 0
         left = 0 
-        right = 0 
-        res = 0 
         curProduct = 1
-        if k <=1:
-            return 0
+        res = 0
+  
         for right in range(len(nums)):
             curProduct *= nums[right]
-            while curProduct >= k:
+            #注意left <= right这个条件
+            while curProduct>=k:
                 curProduct = curProduct//nums[left]
-                left += 1
-            res+= right-left+1
+                left+=1
+            # cannot be cnt+=1
+            # This would simply count the number of times the right pointer moves. 
+            # It doesn't consider the size of the subarray between left and right. 
+            # It would just count each time the right pointer moves forward, regardless of the size of the subarray.
+            res+=right - left + 1
         return res
                 
                 

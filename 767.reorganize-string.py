@@ -7,40 +7,27 @@
 # @lc code=start
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        freq = Counter(s)
+        sCounter =  Counter(s)
         maxHeap = []
-        maxFreq = -float("inf")
-        for char, freq in freq.items():
-            heapq.heappush(maxHeap, (-freq, char))
-            maxFreq = max(maxFreq, freq)
-        # good to have
-        if maxFreq>(len(s)+1)//2:
-            return ''
+        for key, freq in sCounter.items():
+            heapq.heappush(maxHeap, (-freq, key))
         
         res = []
-        prevChar = None
-        while maxHeap:
-            freq, char = heapq.heappop(maxHeap)
-            # we need a new char
-            if prevChar and prevChar == char:
-                if not maxHeap:
-                    return ""
-                nextFreq, nextChar = heapq.heappop(maxHeap)
-                res.append(nextChar)
-                prevChar = nextChar
-                if nextFreq+1<0:
-                    heapq.heappush(maxHeap, (nextFreq+1, nextChar))
-                heapq.heappush(maxHeap, (freq, char))
-
+        while len(maxHeap)>=2:
+            freq1, key1 = heapq.heappop(maxHeap)
+            freq2, key2 = heapq.heappop(maxHeap)
+            res.append(key1)
+            res.append(key2)
+            if freq1+1<0:
+                heapq.heappush(maxHeap, (freq1+1, key1))
+            if freq2+1<0:
+                heapq.heappush(maxHeap, (freq2+1, key2))
+        if maxHeap:
+            if maxHeap[0][0]<-1:
+                return ""
             else:
-                 res.append(char)
-                 prevChar = char
-                 if freq+1<0:
-                    heapq.heappush(maxHeap, (freq+1, char))
+                res.append(maxHeap[0][1])
         return "".join(res)
-
-
-    
+        
             
-# @lc code=end
-
+        
